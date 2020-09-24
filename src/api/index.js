@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 
-const emojis = require('./emojis');
+const images = require("./images");
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   res.json({
-    message: 'API - 👋🌎🌍🌏'
+    message: "API for Image app",
   });
 });
 
-router.use('/emojis', emojis);
+router.use("/images", images);
 
 module.exports = router;

@@ -1,25 +1,29 @@
-const request = require('supertest');
+const { request, expect } = require("./helper");
 
-const app = require('../src/app');
+const app = require("../src/app");
 
-describe('GET /api/v1', () => {
-  it('responds with a json message', (done) => {
+describe("GET /", () => {
+  it("responds with a json message", (done) => {
     request(app)
-      .get('/api/v1')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, {
-        message: 'API - 👋🌎🌍🌏'
-      }, done);
+      .get("/")
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body)
+          .to.have.property("message")
+          .to.match(/API for /);
+        done(err);
+      });
   });
 });
 
-describe('GET /api/v1/emojis', () => {
-  it('responds with a json message', (done) => {
+describe("POST /images", () => {
+  it("responds with a json message", (done) => {
     request(app)
-      .get('/api/v1/emojis')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, ['😀', '😳', '🙄'], done);
+      .post("/images")
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done(err);
+      });
   });
 });
